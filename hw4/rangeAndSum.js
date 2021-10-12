@@ -7,16 +7,45 @@ function range(start, end, step){
         step = 1;
     }
 
-    if(step < 0){
+/*  let a;
+    let b;
+    if(step < 0){           end <= i
         for (let i = start; i >= end; i += step) {
             array.push(i);
         }
+        a = end;
+        b = start;
     }
     else{
         for (let i = start; i <= end; i += step) {
             array.push(i);
         }
+        a = start;
+        b = end;
     }
+*/
+    let b;
+    if(step > 0){
+        b = end;
+    }
+    else {
+        a = end;
+    }
+
+    if(a == undefined){
+        a = start;
+    }
+    else {
+        b = start;
+    }
+
+    let i = start;
+    while(i <= end){
+        array.push(i);
+        i += step;
+    }
+    array.push(i);
+
     return array;
 }
 

@@ -1,12 +1,16 @@
 'use strict'
 
 function reverseArray(array){
-    return array.reverse();
+    let newArray = Array();
+    for (let idx = array.length; index < array.length; index++) {
+        const element = array[index];
+        
+    }
 }
 
 
 function reverseArrayInPlace(array){
-    array.reverse();
+
 }
 
 console.log(reverseArray(['A', 'B', 'C']));

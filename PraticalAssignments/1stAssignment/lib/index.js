@@ -33,4 +33,22 @@ function filterPropertiesN(propNames, objs){
 	return array;
 }
 
+/**
+ * 
+ * @param {Array<number>} a 
+ * @param {Function} combiner 
+ */
+Array.prototype.zip = function(a, combiner){
+	let arrayToReturnSize = this.length;
+	if(arrayToReturnSize > a.length){
+		arrayToReturnSize = a.length;
+	}
+	let toReturn = Array();
+	for (let idx = 0; idx < arrayToReturnSize; idx++) {
+		toReturn[idx] = combiner(this[idx], a[idx]);
+		console.log(idx);
+	}
+
+	return toReturn;
+};
 

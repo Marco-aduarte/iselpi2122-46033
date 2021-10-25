@@ -6,7 +6,9 @@
   "directories": {
     "lib": "lib"
   },
-  "dependencies": {},
+  "dependencies": {
+    "node-fetch": "^2.6.5"
+  },
   "devDependencies": {
     "jest": "^27.3.0"
   },

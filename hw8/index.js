@@ -21,8 +21,7 @@ const urls = {
 }
 
 
-const sum = sumBodiesSizes(urls);
-console.log(sum);
+console.log(sumBodiesSizes(urls))
 
 
 /*let sum = 0;
@@ -40,15 +39,14 @@ console.log(Object
  * @param  {...any} urls 
  * @returns {Promise<Number>} the sum of the response bodies' lengths for given urls
  */
-async function sumBodiesSizes(...urls){
-    return await Object
+function sumBodiesSizes(...urls){
+    let sum = 0;
+    Object
         .values(urls[0])
-        .forEach(url => {
+        .forEach(url => 
             getBodySize(url)
-                .then(size => {
-                    //console.log(`${url} size = ${size}`);
-                    sum += size;
-                }).then(s => sum)
-            })
-           
+                .then(size => 
+                    sum += size
+                )
+            )
 }

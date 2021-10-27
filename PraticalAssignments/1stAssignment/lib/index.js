@@ -26,11 +26,7 @@ function filterProperties(propNames,obj){
  * @param {Array.<object>} objs 
  */
 function filterPropertiesN(propNames, objs){
-	let array = Array();
-	objs.reduce((previousValue, currentValue, currentIndex) => 
-		array[currentIndex] = filterProperties(propNames, currentValue),
-	{});
-	return array;
+	return objs.map((value) => filterProperties(propNames, value))
 }
 
 /**
@@ -46,7 +42,6 @@ Array.prototype.zip = function(a, combiner){
 	let toReturn = Array();
 	for (let idx = 0; idx < arrayToReturnSize; idx++) {
 		toReturn[idx] = combiner(this[idx], a[idx]);
-		console.log(idx);
 	}
 
 	return toReturn;

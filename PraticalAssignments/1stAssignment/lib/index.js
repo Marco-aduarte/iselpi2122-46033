@@ -2,7 +2,7 @@
 
 module.exports = {
 	filterProperties,
-	filterPropertiesN
+	filterPropertiesN,
 };
 
 /**

@@ -2,57 +2,50 @@
 
 const fetch = require('node-fetch');
 const fs = require('fs/promises');
-const URL = 'https://api.boardgameatlas.com/api/search?order_by=rank&ascending=false&client_id=';
-const CLIENT_ID = process.env.ATLAS_CLIENT_ID;
+const utils = require('./index.js');
+
+const CLIENT_ID = `&client_id=${process.env.ATLAS_CLIENT_ID}`;
+const URL = `https://api.boardgameatlas.com/api/search?ids=`;
 const FILE_NAME = 'text.txt';
-const RESULT_FILE_NAME = 'res.json'
+const RESULT_FILENAME = 'resPromises.json'
 
 module.exports = {
 	readFile
 };
 
-
-function getAllGames(url) {
-    return fetch(url)
-        .then(res =>
-            res.text())
-                .then(body =>
-                    JSON.parse(body))
-                        .then(obj => obj.games);
-}
-
-
-//TODO: O BUFFER É DE BYTES
-function readFile(){
-    return fs.readFile(FILE_NAME);
-}
-
-
-let json = Array();
-
 /**
- * 
- * @param {Object} game 
+ * Read all ids from a .txt file
+ * @param {String} filename 
+ * @returns array with all ids
  */
-function filter(game){
-    json.push({
-        "name" : game.name,
-        "url" : game.url
-    })
+function readFile(filename){
+    return fs.readFile(filename).then(data => 
+        {
+            return data.toString().split('\r')
+        });
 }
 
+/**
+ * Write object in file
+ * @param {Object} obj 
+ */
+function writeFile(obj) {
+    fs.writeFile(RESULT_FILENAME, JSON.stringify(obj))
+}
 
 /**
- * Get all game info from id
- * @param {Array<object>} games 
+ * Get 'name' and 'url' properties from games whose id was specified in the file .txt
  * @param {String} id 
+ * @returns Promises<object> with all games with the id specified in the file .txt
  */
-function searchFromId(id){
-    return getAllGames(URL + CLIENT_ID)
-        .then(games => 
-            games.forEach(game =>{ game.id == id ? filter(game) : null })
-        )
+function getGameProperties(id) {
+    return fetch(URL + id + CLIENT_ID)
+        .then(res => res.json())
+        .then(data => data.games[0])
+        .then(game => utils.filterProperties(['name', 'url'], game));
 }
 
-searchFromId('RLlDWHh7hR').then(() => fs.writeFile(RESULT_FILE_NAME, json));
-
+readFile(FILE_NAME)
+    .then(ids => ids.map(id => getGameProperties(id)))
+    .then(obj => Promise.all(obj))
+    .then(writeFile);

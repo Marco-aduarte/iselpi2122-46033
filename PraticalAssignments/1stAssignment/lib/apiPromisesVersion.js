@@ -45,7 +45,15 @@ function getGameProperties(id) {
         .then(game => utils.filterProperties(['name', 'url'], game));
 }
 
+/**
+ * Function to handler errors
+ */
+function handlerError(err) {
+    console.log(err);
+}
+
 readFile(FILE_NAME)
     .then(ids => ids.map(id => getGameProperties(id)))
     .then(obj => Promise.all(obj))
-    .then(writeFile);
+    .then(writeFile)
+    .catch(handlerError);

@@ -42,13 +42,24 @@ async function getGameProperties(id) {
 }
 
 /**
+ * Function to handler errors
+ */
+function handlerFunction(err) {
+    console.log(err);
+}
+
+/**
  * main function
  */
 async function application(){
-    const ids = await readFile(FILE_NAME);
-    const obj = ids.map(id => getGameProperties(id));
-    const prom = await Promise.all(obj);
-    writeFile(prom);
+    try{
+        const ids = await readFile(FILE_NAME);
+        const obj = ids.map(id => getGameProperties(id));
+        const prom = await Promise.all(obj);
+        writeFile(prom);
+    } catch(err) {
+        handlerFunction(err);
+    }
 }
 
 application();

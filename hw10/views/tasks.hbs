@@ -1,0 +1,12 @@
+<div class="col-sm-10">
+    <h2>{{username}} Tasks:</h2>
+    <ul>
+        {{#each tasks}}
+            <li>
+                <a href="{{path}}">
+                    {{task}}
+                </a>
+            </li>
+        {{/each}}
+    </ul>
+</div>
